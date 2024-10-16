@@ -25,5 +25,8 @@ def Net(model_name: str):
     
     out1=layers.GlobalAveragePooling3D()(out1)
     
-    Dense_model = Model(inputs=[model.input], outputs=[out1])
-    Dense_model.summary()
+    IPWM = Model(inputs=[model.input], outputs=[out1])
+    
+    IPWM.compile(optimizer="adam", loss='categorical_crossentropy', metrics=["accuracy",tf.keras.metrics.F1Score(average="macro")])
+    
+    return IPWM
