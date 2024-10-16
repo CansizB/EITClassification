@@ -1,4 +1,5 @@
-def ftExp(model, nb_epoch: int, nb_classes: int, ExpName: str):
+def ftExp(ExpName: str, nb_epoch: int, nb_classes: int):
+  
   for i in range(5):
   
     c= str(i+1)
@@ -17,6 +18,23 @@ def ftExp(model, nb_epoch: int, nb_classes: int, ExpName: str):
     y_trainC = tf.keras.utils.to_categorical(y_train, num_classes=nb_classes)
     y_testC = tf.keras.utils.to_categorical(y_test, num_classes=nb_classes)
     
-    history = model.fit(X_train3d, y_trainC, epochs=nb_epoch, batch_size=64, validation_data=(X_test3d,y_testC))
+    history = net.fit(X_train3d, y_trainC, epochs=nb_epoch, batch_size=64, validation_data=(X_test3d,y_testC))
     
-    model.save(ExpName + "Fold" + c + ".keras")
+    net.save(ExpName + "Fold" + c + ".keras")
+    
+    del net
+
+
+def modelImpFT1(foldId):
+
+    Id = str(foldId)
+
+    Ftmodel = tf.keras.models.load_model('/Users/berkecansiz/Desktop/BRACETS/EIT/Classification_Models_3D_deneme1/Densenet201/5C/FT_Models/FT_Dense201Fold'+Id+ ".keras")
+
+    pretrained_layers = Ftmodel.layers[:-1] 
+
+    Ftmodel = Model(inputs=Ftmodel.input, outputs=pretrained_layers[-1].output)
+
+    Ftmodel.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+
+    return Ftmodel
