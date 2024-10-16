@@ -1,3 +1,4 @@
+import torch
 from classification_models_3D.tfkeras import Classifiers
 
 
@@ -47,7 +48,6 @@ def Net(model_name: str):
     FTADLM = Model(inputs=[model.input], outputs=[predictions])
     
     FTADLM.compile(optimizer="adam", loss='categorical_crossentropy', metrics=["accuracy",tf.keras.metrics.F1Score(average="macro")])
-    
     
     
     return FTADLM
