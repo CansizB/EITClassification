@@ -2,10 +2,14 @@ from classification_models_3D.tfkeras import Classifiers
 
 
 def Net(model_name: str):
+    
+    """
+    model_name: Defines the model that should be selected based on the intended usage.
 
-    '''
-    model_name: it defines the model, that should be selected depend on the usage.  it can be 'densenet201', 'resnet50' etc. 
-    '''
+    The model can be 'densenet201', 'resnet50', etc.
+
+    The choice of the model depends on the specific requirements of the task at hand.
+    """
 
     net, preprocess_input = Classifiers.get(model_name)
     
