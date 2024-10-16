@@ -10,8 +10,13 @@ class ModelTypes:
     def build_net(self, model_name: str):
         """
         model_name: Defines the model that should be selected based on the intended usage.
-
-        The model can be 'densenet201', 'resnet50', etc.
+        The model name can be 'densenet201', 'resnet50', etc. 
+        
+        For more information, please refer to:
+        https://github.com/ZFTurbo/classification_models_3D
+    
+        To install the correct version, run:
+        pip install classification-models-3D==1.0.10
         """
         net, preprocess_input = Classifiers.get(model_name)
         model = net(input_shape=self.input_shape, include_top=False, weights="imagenet")
