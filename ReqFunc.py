@@ -1,4 +1,4 @@
-def ftExp(model, nb_classes):
+def ftExp(model, nb_epoch: int, nb_classes: int, ExpName: str):
   for i in range(5):
   
     c= str(i+1)
@@ -17,4 +17,6 @@ def ftExp(model, nb_classes):
     y_trainC = tf.keras.utils.to_categorical(y_train, num_classes=nb_classes)
     y_testC = tf.keras.utils.to_categorical(y_test, num_classes=nb_classes)
     
-    history = model.fit(X_train3d, y_trainC, epochs=10, batch_size=64, validation_data=(X_test3d,y_testC))
+    history = model.fit(X_train3d, y_trainC, epochs=nb_epoch, batch_size=64, validation_data=(X_test3d,y_testC))
+    
+    model.save(ExpName + "Fold" + c + ".keras")
