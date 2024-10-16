@@ -1,5 +1,7 @@
 import tensorflow as tf
-from classification_models_3D.tfkeras import Classifiers
+from tensorflow.keras import layers
+from tensorflow.keras.callbacks import ModelCheckpoint
+from tensorflow.keras import Model
 
 
 def Net(model_name: str):
