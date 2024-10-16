@@ -29,7 +29,7 @@ def modelImpFT1(foldId):
 
     Id = str(foldId)
 
-    Ftmodel = tf.keras.models.load_model('/Users/berkecansiz/Desktop/BRACETS/EIT/Classification_Models_3D_deneme1/Densenet201/5C/FT_Models/FT_Dense201Fold'+Id+ ".keras")
+    Ftmodel = tf.keras.models.load_model(ExpName + "Fold" +Id+ ".keras")
 
     pretrained_layers = Ftmodel.layers[:-1] 
 
