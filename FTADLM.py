@@ -4,11 +4,17 @@ from classification_models_3D.tfkeras import Classifiers
 def Net(model_name: str):
 
     """
+    
     model_name: Defines the model that should be selected based on the intended usage.
+    The model name can be 'densenet201', 'resnet50', etc. 
+    
+    For more information, please refer to:
+    https://github.com/ZFTurbo/classification_models_3D
 
-    The model can be 'densenet201', 'resnet50', etc.
-
-    The choice of the model depends on the specific requirements of the task at hand.
+    To install the correct version, run:
+    pip install classification-models-3D==1.0.10
+    
+    
     """
 
     net, preprocess_input = Classifiers.get(model_name)
@@ -45,6 +51,3 @@ def Net(model_name: str):
     
     
     return FTADLM
-
-
-if __name__ == "__main__":
