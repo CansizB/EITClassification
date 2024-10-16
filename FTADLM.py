@@ -3,7 +3,15 @@ from classification_models_3D.tfkeras import Classifiers
 
 def Net(model_name: str):
 
-    densenet201, preprocess_input = Classifiers.get('densenet201')
+    """
+    model_name: Defines the model that should be selected based on the intended usage.
+
+    The model can be 'densenet201', 'resnet50', etc.
+
+    The choice of the model depends on the specific requirements of the task at hand.
+    """
+
+    model, preprocess_input = Classifiers.get(model_name)
     
     model = densenet201(input_shape=(330, 32, 32, 3), include_top=False, weights="imagenet")
     
