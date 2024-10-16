@@ -11,9 +11,9 @@ def Net(model_name: str):
     The choice of the model depends on the specific requirements of the task at hand.
     """
 
-    model, preprocess_input = Classifiers.get(model_name)
+    net, preprocess_input = Classifiers.get(model_name)
     
-    model = densenet201(input_shape=(330, 32, 32, 3), include_top=False, weights="imagenet")
+    model = net(input_shape=(330, 32, 32, 3), include_top=False, weights="imagenet")
     
     c=0 
     for layer in model.layers:
