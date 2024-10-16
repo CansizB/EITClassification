@@ -1,3 +1,4 @@
+import tensorflow as tf
 from classification_models_3D.tfkeras import Classifiers
 
 
@@ -6,9 +7,9 @@ def Net(model_name: str):
     """
     model_name: Defines the model that should be selected based on the intended usage.
 
-    The model can be 'densenet201', 'resnet50', etc.
-
-    The choice of the model depends on the specific requirements of the task at hand.
+    The model can be 'densenet201', 'resnet50', etc. 
+    to getting more information please refer to "https://github.com/ZFTurbo/classification_models_3D" 
+    
     """
 
     net, preprocess_input = Classifiers.get(model_name)
@@ -37,7 +38,5 @@ def Net(model_name: str):
     FTM = Model(inputs=[model.input], outputs=[predictions])
     
     FTM.compile(optimizer="adam", loss='categorical_crossentropy', metrics=["accuracy",tf.keras.metrics.F1Score(average="macro")])
-    
-    
     
     return FTM
