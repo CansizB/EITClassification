@@ -7,7 +7,7 @@ run './eidors-v3.10-ng/eidors/startup.m'
 %%%% Please visit "https://github.com/DiogoMPessoa/Dimensionless-Respiratory-Airflow-Estimation/blob/main/EIT%20reconstruction/SampleDataVizualization.m"
 %%%% Also check "http://eidors3d.sourceforge.net/tutorial/netgen/extrusion/thoraxmdl.shtml"
 size_image=32;
-ROIS_masks=struct();
+ROIS_masks=struct(); 
 Total_image=1:size_image*size_image;
 Out_lung=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,59,60,61,62,63,64,65,66,67,68,69,70,71,92,93,94,95,96,97,98,99,100,101,125,126,127,128,129,130,131,132,158,159,160,161,162,163,190,191,192,193,194,223,224,225,255,256,257,288,320,513,545,577,704,736,768,769,799,800,801,831,832,833,834,862,863,864,865,866,867,893,894,895,896,897,898,899,900,901,925,926,927,928,929,930,931,932,933,934,935,956,957,958,959,960,961,962,963,964,965,966,967,968,969,987,988,989,990,991,992,993,994,995,996,997,998,999,1000,1001,1002,1003,1004,1005,1015,1016,1017,1018,1019,1020,1021,1022,1023,1024];
 In_lung=setdiff(Total_image,Out_lung);
