@@ -159,5 +159,3 @@ def FitWorkflow(csvpath):
           proba_modelHGBC.append(HGBC.predict_proba(X_testSS)) 
           proba_modelSoVC.append(SoVC.predict_proba(X_testSS))
           proba_modelSC.append(SC.predict_proba(X_testSS))
-  
-          del modelId
