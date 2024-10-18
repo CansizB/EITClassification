@@ -21,7 +21,7 @@ create_proba_model_lists()
 
 estimators = create_estimators()
 
-def FitWorkflow(csvpath):
+def FitWorkflow(csvpath, model_name="densenet201", nb_classes=5):
   for fold in range(5):
       #c= str(i+1)
     
@@ -42,7 +42,7 @@ def FitWorkflow(csvpath):
           
           elif j == 1:
               modelId = "FTM"
-              model = ModelTypes.FTM("densenet201", nb_classes= 5)
+              model = ModelTypes.FTM(model_name, nb_classes= nb_classes)
               ReqFunc.ftExp(net = model, fold = fold, ExpName = modelId, nb_epoch = 20, nb_classes= 5)
 
               model = modelImp(ExpName = modelId, fold)
@@ -51,7 +51,7 @@ def FitWorkflow(csvpath):
           
           else:
               modelId = "FTADLM"
-              model = ModelTypes.FTM("densenet201", nb_classes= 5)
+              model = ModelTypes.FTM(model_name, nb_classes= nb_classes)
               ReqFunc.ftExp(net = model, fold = fold, ExpName = modelId, nb_epoch = 20, nb_classes= 5)
 
               model = modelImp(ExpName = modelId, fold)
