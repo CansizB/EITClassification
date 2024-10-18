@@ -41,17 +41,22 @@ class ImgRecon:
     def RoiFrame(self, slice_data, start, end):
         return np.array([slice_data[i] for i in range(start, end)])
 
-    def KFOLD(self, nb_subj, meta_path: str):
+    def KFOLD(self, nb_subj, meta_path, nb_classes=5):
 
         xph=np.random.random(nb_subj)
         meta=pd.read_csv(meta_path + "/Metadata.txt")
         meta.reset_index(drop=True, inplace=True)
         yph=meta["Diagnosis"]
         label_encoder = LabelEncoder()
-        yph = label_encoder.fit_transform(yph)
+
+        if nb_classes == 5:
+            yph = label_encoder.fit_transform(yph)
+
+        elif nb_classes == 3:
+            yph = np.where(yph == 0, 0, np.where(yph == 1, 0, np.where(yph == 2, 1, 2))) #if 3 class structure is implemented 
         
-        # yph = np.where(yph == 0, 0, np.where(yph == 1, 0, np.where(yph == 2, 1, 2))) #if 3 class structure is implemented 
-        # yph = np.where(yph == 2, 1, 0) #if binary structure is implemented 
+        else:
+            yph = np.where(yph == 2, 1, 0) #if binary structure is implemented 
 
 
         # Stratified K-Fold setup
@@ -67,61 +72,94 @@ class ImgRecon:
         # Create separate train/test indices for 5 folds
         self.train_test_splits = [(all_train_idx[i] + 1, all_test_idx[i] + 1) for i in range(5)]
 
-    def CSVtoNumPy(self, class_info, mfile_path, CSVname):
+    def CSVtoNumPy(self, class_info, mfile, CSVname, fold):
+        train_idx, test_idx = self.train_test_splits[fold]
+        
         train, test = [], []
 
         for i in range(0, 78):
             subject = i + 1
-            if mfile_path["Diagnosis"][i] == class_info:
-                for j in range(len(mfile_path)):
-                    if mfile_path["SubjectID"][j] == subject:
-                        path = mfile_path["EITFilename"][j]
+            if mfile["Diagnosis"][i] == class_info:
+                for j in range(len(mfile)):
+                    if mfile["SubjectID"][j] == subject:
+                        path = mfile["EITFilename"][j]
                         slice_data = self.get_slice(CSVname + "/" + path[:-4] + ".csv")
                         start, end = round(len(slice_data) / 2) - 165, round(len(slice_data) / 2) + 165
                         frames = self.RoiFrame(slice_data, start, end)
 
-                        if subject in train:
+                        if subject in train_idx:
                             train.append(frames)
-                        if subject in test:
+                        if subject in test_idx:
                             test.append(frames)
 
         return np.array(train), np.array(test)
 
-    def GenSet(self, fold, path, save=False):
-        # Assuming train/test indices are set from KFOLD
-        train_idx, test_idx = self.train_test_splits[fold]
-        CSV_name = path
-    
+    def GenSet(self, fold, CSVname, mfile_path, nb_classes, save=False):
+        CSVname = str(CSVname)
+        mfile = pd.read_csv(str(mfile_path))
+
+        self.KFOLD(nb_subj, meta_path, nb_classes)
         # Generate datasets for different classes
-        COPD_train, COPD_test = self.CSVtoNumPy("COPD", meta, file_name, CSV_name)
-        ILD_train, ILD_test = self.CSVtoNumPy("ILD", meta, file_name, CSV_name)
-        Healthy_train, Healthy_test = self.CSVtoNumPy("Healthy", meta, file_name, CSV_name)
-        Asthma_train, Asthma_test = self.CSVtoNumPy("Asthma", meta, file_name, CSV_name)
-        Infection_train, Infection_test = self.CSVtoNumPy("Infection", meta, file_name, CSV_name)
+        COPD_train, COPD_test = self.CSVtoNumPy("COPD", mfile, CSV_name, fold)
+        ILD_train, ILD_test = self.CSVtoNumPy("ILD", mfile, CSV_name, fold)
+        Healthy_train, Healthy_test = self.CSVtoNumPy("Healthy", mfile, CSV_name, fold)
+        Asthma_train, Asthma_test = self.CSVtoNumPy("Asthma", mfile, CSV_name, fold)
+        Infection_train, Infection_test = self.CSVtoNumPy("Infection", mfile, CSV_name, fold)
     
         # Concatenate and label the data
         X_train = np.concatenate([COPD_train, ILD_train, Asthma_train, Infection_train, Healthy_train])
         X_test = np.concatenate([COPD_test, ILD_test, Asthma_test, Infection_test, Healthy_test])
         
-        y_train = np.concatenate([np.ones(COPD_train.shape[0]), 
+        if nb_classes == 5:
+            y_train = np.concatenate([np.ones(COPD_train.shape[0]), 
                                   3 * np.ones(ILD_train.shape[0]), 
                                   np.zeros(Asthma_train.shape[0]), 
                                   4 * np.ones(Infection_train.shape[0]), 
                                   2 * np.ones(Healthy_train.shape[0])])
         
-        y_test = np.concatenate([np.ones(COPD_test.shape[0]), 
-                                 3 * np.ones(ILD_test.shape[0]), 
-                                 np.zeros(Asthma_test.shape[0]), 
-                                 4 * np.ones(Infection_test.shape[0]), 
-                                 2 * np.ones(Healthy_test.shape[0])])
+            y_test = np.concatenate([np.ones(COPD_test.shape[0]), 
+                                     3 * np.ones(ILD_test.shape[0]), 
+                                     np.zeros(Asthma_test.shape[0]), 
+                                     4 * np.ones(Infection_test.shape[0]), 
+                                     2 * np.ones(Healthy_test.shape[0])])
+        elif nb_classes == 3:
+            y_train = np.concatenate([np.zeros(COPD_train.shape[0]), 
+                                    2 * np.ones(ILD_train.shape[0]), 
+                                    np.zeros(Asthma_train.shape[0]), 
+                                    2 * np.ones(Infection_train.shape[0]), 
+                                    np.ones(Healthy_train.shape[0])])
+        
+            y_test = np.concatenate([np.zeros(COPD_test.shape[0]), 
+                                     2 * np.ones(ILD_test.shape[0]), 
+                                     np.zeros(Asthma_test.shape[0]), 
+                                     2 * np.ones(Infection_test.shape[0]), 
+                                     np.ones(Healthy_test.shape[0])])
+
+        else:
+            y_train = np.concatenate([np.zeros(COPD_train.shape[0]), 
+                                    np.zeros(ILD_train.shape[0]), 
+                                    np.zeros(Asthma_train.shape[0]), 
+                                    np.zeros(Infection_train.shape[0]), 
+                                    np.ones(Healthy_train.shape[0])])
+        
+            y_test = np.concatenate([np.zeros(COPD_test.shape[0]), 
+                                     np.zeros(ILD_test.shape[0]), 
+                                     np.zeros(Asthma_test.shape[0]), 
+                                     np.zeros(Infection_test.shape[0]), 
+                                     np.ones(Healthy_test.shape[0])])
     
         # Optionally save the arrays to .npy files
         if save:
-            np.save(f"{path}/fold_{fold}/X_train.npy", X_train)
-            np.save(f"{path}/fold_{fold}/X_test.npy", X_test)
-            np.save(f"{path}/fold_{fold}/y_train.npy", y_train)
-            np.save(f"{path}/fold_{fold}/y_test.npy", y_test)
-    
+            
+            directory = f"data/C{nb_classes}/fold_{fold}"
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+                
+            np.save(os.path.join(directory, "X_train.npy"), X_train)
+            np.save(os.path.join(directory, "X_test.npy"), X_test)
+            np.save(os.path.join(directory, "y_train.npy"), y_train)
+            np.save(os.path.join(directory, "y_test.npy"), y_test)
+            
         return X_train, X_test, y_train, y_test
 
 
@@ -129,13 +167,13 @@ class ImgRecon:
 def ftExp(net, fold, ExpName, nb_epoch, nb_classes):
     #for i in range(5):
     fold = str(i + 1)
-    y_train = np.load(f"path/fold_{fold}/y_train.npy")
-    y_test = np.load(f"path/fold_{fold}/y_test.npy")
-    X_train = np.load(f"path/fold_{fold}/X_train.npy")
-    X_test = np.load(f"path/fold_{fold}/X_test.npy")
+    y_train = np.load(f"data/C{nb_classes}/fold_{fold}/y_train.npy")
+    y_test = np.load(f"data/C{nb_classes}/fold_{fold}/y_test.npy")
+    X_train = np.load(f"data/C{nb_classes}/X_train.npy")
+    X_test = np.load(f"data/C{nb_classes}/X_test.npy")
 
-    X_train3d = makeRGB(X_train, 330)
-    X_test3d = makeRGB(X_test, 330)
+    X_train3d = ImgRecon.makeRGB(X_train, 330)
+    X_test3d = ImgRecon.makeRGB(X_test, 330)
     X_train3d, y_train = shuffle(X_train3d, np.array(y_train), random_state=42)
 
     y_trainC = tf.keras.utils.to_categorical(y_train, num_classes=nb_classes)
