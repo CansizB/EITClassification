@@ -9,6 +9,19 @@ class ImgRecon:
     def __init__(self, path):
         self.path = path
 
+    def makeRGB(self, data, frame):
+
+        data3d = np.zeros((data.shape[0],data.shape[1],data.shape[2],data.shape[3],3))
+        
+        for i in range(frame):
+            # Her bir frame'i 3 boyutlu hale getirme
+            for j in range(3):
+                data3d[:, i, :, :, j] = data[:, i, :, :]
+        data3d = data3d.astype(np.uint8)
+    
+        return data3d
+
+
     def get_slice(self, CSVname):
         # Read and process the CSV data
         data = pd.read_csv(CSVname, header=None).values
@@ -111,7 +124,7 @@ class ImgRecon:
 
 
 
-def ftExp(ExpName, nb_epoch, nb_classes):
+def ftExp(net, ExpName, nb_epoch, nb_classes):
     for i in range(5):
         fold = str(i + 1)
         y_train = np.load(f"path/fold_{fold}/y_train.npy")
@@ -130,7 +143,10 @@ def ftExp(ExpName, nb_epoch, nb_classes):
         net.save(ExpName + "Fold" + fold + ".keras")
         del net
 
-
+def extract_features(model, data):
+    features = model.predict(data)
+    return features
+    
 def modelImp(ExpName, foldId):
     fold_str = str(foldId)
     Ftmodel = tf.keras.models.load_model(ExpName + "Fold" + fold_str + ".keras")
