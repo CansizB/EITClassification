@@ -16,7 +16,7 @@ class ImgRecon:
         data3d = np.zeros((data.shape[0],data.shape[1],data.shape[2],data.shape[3],3))
         
         for i in range(frame):
-            # Her bir frame'i 3 boyutlu hale getirme
+            
             for j in range(3):
                 data3d[:, i, :, :, j] = data[:, i, :, :]
         data3d = data3d.astype(np.uint8)
