@@ -153,3 +153,16 @@ def modelImp(ExpName, foldId):
     Ftmodel = Model(inputs=Ftmodel.input, outputs=pretrained_layers[-1].output)
     Ftmodel.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
     return Ftmodel
+
+def listdefinder(prefix):
+    AccList = [[], [], []]
+    bAccList = [[], [], []]
+    F1List = [[], [], []]
+    
+    # Assign to global variables dynamically using prefix
+    globals()[f"AccList_{prefix}"] = AccList
+    globals()[f"bAccList_{prefix}"] = bAccList
+    globals()[f"F1List_{prefix}"] = F1List
+
+
+
