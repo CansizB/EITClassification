@@ -132,7 +132,7 @@ def ftExp(ExpName: str, nb_epoch: int, nb_classes: int):
     del net
 
 
-def modelImpFT1(foldId):
+def modelImp(ExpName, foldId):
 
     Id = str(foldId)
 
