@@ -4,6 +4,8 @@ from sklearn.model_selection import StratifiedKFold
 import tensorflow as tf
 from tensorflow.keras.models import Model
 from sklearn.utils import shuffle
+from sklearn.svm import SVC
+from sklearn.ensemble import HistGradientBoostingClassifier, RandomForestClassifier
 
 class ImgRecon:
     def __init__(self, path):
@@ -163,6 +165,21 @@ def listdefinder(prefix):
     globals()[f"AccList_{prefix}"] = AccList
     globals()[f"bAccList_{prefix}"] = bAccList
     globals()[f"F1List_{prefix}"] = F1List
+
+def create_proba_model_lists():
+    model_names = ['RBF', 'LIN', 'HGBC', 'SoVC', 'RFC', 'SC']
+    for model in model_names:
+        globals()[f"proba_model{model}"] = []
+
+
+def create_estimators():
+    return [
+        ('svmline', SVC(C= 1, gamma= "scale", kernel= "linear", degree=1, class_weight="balanced", probability=True)),
+        ('svmrbf', SVC(C= 1, gamma= "scale", kernel= "rbf", degree=1, class_weight="balanced", probability=True)),
+        ('hgbc', HistGradientBoostingClassifier(loss='log_loss', learning_rate= 0.1, max_iter=400, max_depth=4, class_weight="balanced")),
+        ('rfc', RandomForestClassifier(n_estimators=200, max_depth=4, criterion="gini", class_weight="balanced"))
+    ]
+
 
 
 
