@@ -28,12 +28,15 @@ class ModelTypes:
         Builds and compiles IPWM.
         """
 
+        # Build the model first
+        model = self.build_net(model_name)
+
+        # Freeze all layers
         for layer in model.layers:
             layer.trainable = False
 
+        # Add global pooling layer and build the model
         out = layers.GlobalAveragePooling3D()(model.output)
-        model = self.build_net(model_name)
-      
         model = Model(inputs=[model.input], outputs=[out])
       
         model.compile(optimizer="adam", loss='categorical_crossentropy',
@@ -46,63 +49,50 @@ class ModelTypes:
         """
         model = self.build_net(model_name)
         
-        c=0 
-        for layer in model.layers:
-            c=c+1
+        # Count the number of layers and define the number of layers to freeze
+        Nb_Layers = len(model.layers)
+        OUT_LAYERS = round(Nb_Layers * 0.1)  # Freeze 10% of the layers
         
-        Nb_Layers=c
-        OUT_LAYERS = Nb_Layers * (10/100)
-        OUT_LAYERS = round(OUT_LAYERS,0)  
-        
-        for layer in model.layers[:-int(OUT_LAYERS)]:
+        # Freeze first 90% of the layers
+        for layer in model.layers[:-OUT_LAYERS]:
             layer.trainable = False
         
-        out1 = model.output
+        # Build the head of the network
+        out = layers.GlobalAveragePooling3D()(model.output)
+        out = layers.Dense(2048, activation="relu")(out)
+        predictions = layers.Dense(nb_classes, activation="softmax")(out)
         
-        out1=layers.GlobalAveragePooling3D()(out1)
-        
-        out1 = layers.Dense(2048, activation = "relu")(out1)
-        predictions = layers.Dense(nb_classes, activation = "softmax")(out1)
-        
-        
+        # Create and compile the model
         model = Model(inputs=[model.input], outputs=[predictions])
         
         model.compile(optimizer="adam", loss='categorical_crossentropy',
                       metrics=["accuracy", tf.keras.metrics.F1Score(average="macro")])
         return model
 
-    def FTADLM(self, model_name:str, nb_classes: int):
+    def FTADLM(self, model_name: str, nb_classes: int):
         """
         Builds and compiles the FTADLM.
         """
         model = self.build_net(model_name)
       
-        c=0 
-        for layer in model.layers:
-            c=c+1
+        # Count the number of layers and define the number of layers to freeze
+        Nb_Layers = len(model.layers)
+        OUT_LAYERS = round(Nb_Layers * 0.15)  # Freeze 15% of the layers
         
-        Nb_Layers=c
-        OUT_LAYERS = Nb_Layers * (15/100)
-        OUT_LAYERS = round(OUT_LAYERS,0)  
-        
-        b=0
-        for layer in model.layers[:-int(OUT_LAYERS)]:
-            b=b+1
+        # Freeze first 85% of the layers
+        for layer in model.layers[:-OUT_LAYERS]:
             layer.trainable = False
         
-        out1 = model.output
+        # Build the head of the network
+        out = layers.GlobalAveragePooling3D()(model.output)
+        out = layers.Dense(2048, activation="relu")(out)
+        out = layers.Dropout(0.2)(out)
+        out = layers.Dense(64, activation="relu")(out)
+        predictions = layers.Dense(nb_classes, activation="softmax")(out)
         
-        out1=layers.GlobalAveragePooling3D()(out1)
-        
-        out1 = layers.Dense(2048, activation = "relu")(out1)
-        x = layers.Dropout(0.2)(x)
-        x = layers.Dense(64, activation = "relu")(x)
-        predictions = layers.Dense(nb_classes, activation = "softmax")(out1)
-        
-        
+        # Create and compile the model
         model = Model(inputs=[model.input], outputs=[predictions])
         
         model.compile(optimizer="adam", loss='categorical_crossentropy',
                       metrics=["accuracy", tf.keras.metrics.F1Score(average="macro")])
         return model
-
