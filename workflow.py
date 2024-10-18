@@ -25,7 +25,7 @@ def FitWorkflow(csvpath, model_name="densenet201", nb_classes=5):
   for fold in range(5):
       #c= str(i+1)
     
-      X_train, X_test, y_train, y_test = ImgRecon.GenSet(fold, csvpath, save=False)
+      X_train, X_test, y_train, y_test = ImgRecon.GenSet(fold, path, mfile_path, nb_classes, save=True)
   
       X_train3d= ImgRecon.makeRGB(X_train, 330)
       X_test3d= ImgRecon.makeRGB(X_test,330)
