@@ -6,8 +6,20 @@ from sklearn.metrics import accuracy_score, f1_score, balanced_accuracy_score, c
 
 import ReqFunc
 from ReqFunc import ImgRecon
+from ReqFunc import listdefinder, create_estimators
 from EITExp import ModelTypes
 
+listdefinder('SVM_LIN')
+listdefinder('SVM_RBF')
+listdefinder('RFC')
+listdefinder('HGBC')
+listdefinder('SoVC')
+listdefinder('SC')
+listdefinder('HVC')
+
+create_proba_model_lists()
+
+estimators = create_estimators()
 
 def FitWorkflow(csvpath):
   for fold in range(5):
