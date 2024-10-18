@@ -51,7 +51,7 @@ class ModelTypes:
         
         # Count the number of layers and define the number of layers to freeze
         Nb_Layers = len(model.layers)
-        OUT_LAYERS = round(Nb_Layers * 0.1)  # Freeze 10% of the layers
+        OUT_LAYERS = round(Nb_Layers * 0.1)  # 10% of the layers
         
         # Freeze first 90% of the layers
         for layer in model.layers[:-OUT_LAYERS]:
@@ -77,7 +77,7 @@ class ModelTypes:
       
         # Count the number of layers and define the number of layers to freeze
         Nb_Layers = len(model.layers)
-        OUT_LAYERS = round(Nb_Layers * 0.15)  # Freeze 15% of the layers
+        OUT_LAYERS = round(Nb_Layers * 0.15)  # 15% of the layers
         
         # Freeze first 85% of the layers
         for layer in model.layers[:-OUT_LAYERS]:
