@@ -67,15 +67,15 @@ class ImgRecon:
         # Create separate train/test indices for 5 folds
         self.train_test_splits = [(all_train_idx[i] + 1, all_test_idx[i] + 1) for i in range(5)]
 
-    def CSVtoNumPy(self, class_info, meta, file_name, CSVname):
+    def CSVtoNumPy(self, class_info, mfile_path, CSVname):
         train, test = [], []
 
         for i in range(0, 78):
             subject = i + 1
-            if meta["Diagnosis"][i] == class_info:
-                for j in range(len(file_name)):
-                    if file_name["SubjectID"][j] == subject:
-                        path = file_name["EITFilename"][j]
+            if mfile_path["Diagnosis"][i] == class_info:
+                for j in range(len(mfile_path)):
+                    if mfile_path["SubjectID"][j] == subject:
+                        path = mfile_path["EITFilename"][j]
                         slice_data = self.get_slice(CSVname + "/" + path[:-4] + ".csv")
                         start, end = round(len(slice_data) / 2) - 165, round(len(slice_data) / 2) + 165
                         frames = self.RoiFrame(slice_data, start, end)
