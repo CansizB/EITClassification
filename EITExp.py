@@ -1,6 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras import layers
 from tensorflow.keras import Model
+
 from classification_models_3D.tfkeras import Classifiers
 
 class ModelTypes:
@@ -17,6 +18,9 @@ class ModelTypes:
     
         To install the correct version, run:
         pip install classification-models-3D==1.0.10
+
+        The TensorFlow version should be 2.15
+        pip install --upgrade tensorflow==2.15
         """
         net, preprocess_input = Classifiers.get(model_name)
         model = net(input_shape=self.input_shape, include_top=False, weights="imagenet")
@@ -36,11 +40,10 @@ class ModelTypes:
             layer.trainable = False
 
         # Add global pooling layer and build the model
-        out = layers.GlobalAveragePooling3D()(model.output)
-        model = Model(inputs=[model.input], outputs=[out])
-      
-        model.compile(optimizer="adam", loss='categorical_crossentropy',
-                      metrics=["accuracy", tf.keras.metrics.F1Score(average="macro")])
+        out1 = model.output
+        out1=layers.GlobalAveragePooling3D()(out1)
+        model = Model(inputs=[model.input], outputs=[out1])
+        
         return model
 
     def FTM(self, model_name: str, nb_classes: int):
