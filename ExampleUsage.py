@@ -10,7 +10,6 @@
 #   from the repository: https://github.com/ZFTurbo/classification_models_3D
 #   pip install classification-models-3D==1.0.10
 
-
 from workflow import FitWorkflow
 
 if __name__ == "__main__":
