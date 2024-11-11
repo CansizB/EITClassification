@@ -1,14 +1,16 @@
-# Assuming that the data has already been installed and converted to a CSV file as described in "EITRecon.m" file.
-# That CSV file should be placed in the same folder as these code files.
-# 
-# Additionally, make sure the following dependencies are installed:
+# It is assumed that the data has been downloaded and converted to a CSV file as described in the "EITRecon.m" file.
+# This CSV file should be placed in the same folder as these code files.
+#
+# Additionally, ensure that the following dependencies are installed:
+# - Python version: 3.11
 #
 # - TensorFlow version should be 2.15:
-#   pip install --upgrade tensorflow==2.15
+#   pip install --upgrade tensorflow==2.15 with pip install keras-appliacations
 #
-# - The classification-models-3D library (version 1.0.10) should be imported correctly 
+# - The classification-models-3D library (version 1.0.10) should be installed correctly 
 #   from the repository: https://github.com/ZFTurbo/classification_models_3D
 #   pip install classification-models-3D==1.0.10
+
 
 from workflow import FitWorkflow
 
