@@ -10,7 +10,6 @@ from sklearn.ensemble import HistGradientBoostingClassifier, RandomForestClassif
 from sklearn.preprocessing import LabelEncoder
 
 class ImgRecon:
-    #def __init__(self)
 
     def makeRGB(self, data, frame):
     
