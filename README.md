@@ -24,16 +24,24 @@ These foundational studies have shaped the methodology and design of the models 
 
 - **ReqFunc**: Contains the necessary functions for model training. This includes code for image reconstruction and fine-tuning operations.
 
-<img src="Images/Preprocessing.png" width="700">
+<p align="center">
+  <img src="Images/Preprocessing.png" width="700" alt="Preprocessing" />
+</p>
+
 
 - **EITExp**: Includes the model types used in the experiments, such as Initial Pretrained Weights Models (IPWM), Fine-Tuned Models (FTM), and Fine-Tuned Additional Dense Layer Models (FTADLM).
 - **ModelTypes**: This folder contains the implemented code for the models used in the study, organized separately for each model type.
-  
-<img src="Images/Models.png" width="700">
+
+
+<p align="center">
+  <img src="Images/Models.png" width="700" alt="Models" />
+</p>
 
 - **Workflow**: Contains the main script that calls all the core functions and integrates the entire workflow of the project.
 
-<img src="Images/Workflow.png" width="700">
+<p align="center">
+  <img src="Images/Workflow.png" width="700" alt="Workflow" />
+</p>
 
   
 ## Example Usage
