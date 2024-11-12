@@ -6,7 +6,8 @@ This repository hosts the implementation code used in the article titled "Deep L
 - ["Ensemble Deep Learning Model for Dimensionless Respiratory Airflow Estimation Using Respiratory Sound"](https://github.com/DiogoMPessoa/Dimensionless-Respiratory-Airflow-Estimation.git)
 - ["3D Convolutional Neural Networks for Stalled Brain Capillary Detection"](https://github.com/ZFTurbo/classification_models_3D.git)
 
-These foundational studies have shaped the methodology and design of the models presented here.
+
+In this project, challenges of traditional thoracic imaging—such as high costs and radiation exposure—are addressed using electrical impedance tomography (EIT), a non-invasive, radiation-free method for lung disease diagnosis. A deep learning framework is developed to classify lung diseases from EIT images, utilizing feature extraction methods from pretrained and fine-tuned models. This approach aims to simplify and improve lung diagnostics using EIT imaging.
 
 
 
