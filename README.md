@@ -14,7 +14,8 @@ These foundational studies have shaped the methodology and design of the models 
 
 ## Requirments
 - Python <= 3.11
-- Tensorflow = 2.15
+- Tensorflow 2.15
+- classification-models-3D = 1.0.10
 - Numpy
 - Pandas
 - Scikit-learn
@@ -46,11 +47,11 @@ These foundational studies have shaped the methodology and design of the models 
   
 ## Example Usage
 
-To run an example of how to use these models, please execute the `ExampleUsage.py` script. This script provides a simple demonstration of how to load the models, perform predictions, and interpret results.
+To run an example of how to use these models, please execute the `ExampleUsage.py` script. This script provides a simple demonstration of how to load the models, perform learnings.
 
 ## Citation
 
-If you use this repository or the models in your work, please cite the original article titled " Deep Learning-Driven Feature Engineering for Lung Disease Classification Through Electrical Impedance Tomography Imaging" as follows:
+If you use this repository or the models in your work, please cite the original article titled "Deep Learning-Driven Feature Engineering for Lung Disease Classification Through Electrical Impedance Tomography Imaging" as follows:
 
 [Insert citation here]
 
