@@ -13,14 +13,16 @@ In this project, challenges of traditional thoracic imaging—such as high costs
 
 
 
-## Requirments
-- Python <= 3.11
-- Tensorflow 2.15
-- classification-models-3D = 1.0.10
-- Numpy
-- Pandas
-- Scikit-learn
 
+## Requirments
+```python
+# python <= 3.9.7
+  Tensorflow == 2.15
+  classification-models-3D == 1.0.10
+  Numpy
+  Pandas
+  Scikit-learn
+```
 
 ## Repository Contents
 
