@@ -56,5 +56,14 @@ To run an example of how to use these models, please execute the `ExampleUsage.p
 
 If you use this repository or the models in your work, please cite the original article titled "Deep Learning-Driven Feature Engineering for Lung Disease Classification Through Electrical Impedance Tomography Imaging" as follows:
 
-
+```
+@article{cansiz2024tunable,
+  title={Tunable Q-factor wavelet transform based lung signal decomposition and statistical feature extraction for effective lung disease classification},
+  author={Cansiz, Berke and Kilinc, Coskuvar Utkan and Serbes, Gorkem},
+  journal={Computers in Biology and Medicine},
+  pages={108698},
+  year={2024},
+  publisher={Elsevier}
+}
+```
 
