@@ -54,5 +54,5 @@ To run an example of how to use these models, please execute the `ExampleUsage.p
 
 If you use this repository or the models in your work, please cite the original article titled "Deep Learning-Driven Feature Engineering for Lung Disease Classification Through Electrical Impedance Tomography Imaging" as follows:
 
-[Insert citation here]
+
 
