@@ -19,7 +19,6 @@ def listdefinder(prefix):
     bAccList = [[], [], []]
     F1List = [[], [], []]
     
-    # Global değişken isimlerini dinamik olarak tanımla
     globals()[f"AccList_{prefix}"] = AccList
     globals()[f"bAccList_{prefix}"] = bAccList
     globals()[f"F1List_{prefix}"] = F1List
