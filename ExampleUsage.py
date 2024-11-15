@@ -1,4 +1,4 @@
-# It is assumed that the data has been downloaded and converted to a CSV file as described in the "EITRecon.m" file.
+# It is assumed that the data has been downloaded (from https://data.mendeley.com/datas ets/f43c7snks5/1) and converted to a CSV file as described in the "EITRecon.m" file.
 # This CSV file should be placed in the same folder as these code files.
 #
 # Additionally, ensure that the following dependencies are installed:
