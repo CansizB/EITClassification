@@ -50,20 +50,22 @@ In this project, challenges of traditional thoracic imaging—such as high costs
   
 ## Example Usage
 
-To run an example of how to use these models, please execute the `ExampleUsage.py` script. This script provides a simple demonstration of how to load the models, perform learnings.
+To run an example of how to use these models, please execute the `RunExperiment.py` script. This script provides a simple demonstration of how to load the models, perform learnings.
 
 ## Citation
 
 If you use this repository or the models in your work, please cite the original article titled "Deep Learning-Driven Feature Engineering for Lung Disease Classification Through Electrical Impedance Tomography Imaging" as follows:
 
 ```
-@article{cansiz2024tunable,
-  title={Tunable Q-factor wavelet transform based lung signal decomposition and statistical feature extraction for effective lung disease classification},
+@article{cansiz2025deep,
+  title={Deep learning-driven feature engineering for lung disease classification through electrical impedance tomography imaging},
   author={Cansiz, Berke and Kilinc, Coskuvar Utkan and Serbes, Gorkem},
-  journal={Computers in Biology and Medicine},
-  pages={108698},
-  year={2024},
+  journal={Biomedical Signal Processing and Control},
+  volume={100},
+  pages={107124},
+  year={2025},
   publisher={Elsevier}
 }
 ```
+Cansiz, B., Kilinc, C. U., & Serbes, G. (2025). Deep learning-driven feature engineering for lung disease classification through electrical impedance tomography imaging. Biomedical Signal Processing and Control, 100, 107124.
 
